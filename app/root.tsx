@@ -3,6 +3,7 @@ import {
   Links,
   Meta,
   Outlet,
+  redirect,
   Scripts,
   ScrollRestoration,
   useLoaderData,
@@ -12,6 +13,7 @@ import '@/app.css';
 import { Toaster } from '@/components/ui/sonner';
 import type { Route } from './+types/root';
 import { useState } from 'react';
+import { isAuth } from './auth';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -29,7 +31,16 @@ export const links: Route.LinksFunction = () => [
 export function meta() {
   return [{ title: '' }, { name: 'description', content: '' }];
 }
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  
+  if (!url.pathname.startsWith('/login')) {
+    const isAuthenticated = await isAuth(request);
+    if (!isAuthenticated) {
+      return redirect('/login');
+    }
+  }
+  
   return {
     theme: 'light' as Theme,
   };

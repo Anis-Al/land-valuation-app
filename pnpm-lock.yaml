@@ -113,6 +113,12 @@ importers:
       recharts:
         specifier: 2.15.4
         version: 2.15.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      remix-auth:
+        specifier: ^4.2.0
+        version: 4.2.0
+      remix-auth-form:
+        specifier: ^3.0.0
+        version: 3.0.0(remix-auth@4.2.0)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -122,6 +128,9 @@ importers:
       tsx:
         specifier: ^4.20.3
         version: 4.20.3
+      zod:
+        specifier: ^4.1.11
+        version: 4.1.11
     devDependencies:
       '@eslint/js':
         specifier: ^9.32.0
@@ -3119,6 +3128,16 @@ packages:
     resolution: {integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==}
     engines: {node: '>= 0.4'}
 
+  remix-auth-form@3.0.0:
+    resolution: {integrity: sha512-2c8d9BUJhnOrXg2w/iELLMj7RYT9EDI5eip9DSfN8caCTw0V33tNXvUNW44cYJQ8CjwAPi94vVaaezCHEdTSbQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      remix-auth: ^4.0.0
+
+  remix-auth@4.2.0:
+    resolution: {integrity: sha512-3LSfWEvSgG2CgbG/p4ge5hbV8tTXWNnnYIGbTr9oSSiHz9dD7wh6S0MEyo3pwh7MlKezB2WIlevGeyqUZykk7g==}
+    engines: {node: '>=20.0.0'}
+
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -3609,6 +3628,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@4.1.11:
+    resolution: {integrity: sha512-WPsqwxITS2tzx1bzhIKsEs19ABD5vmCVa4xBo2tq/SrV4RNZtfws1EnCWQXM6yh8bD08a1idvkB5MZSBiZsjwg==}
 
 snapshots:
 
@@ -6553,6 +6575,12 @@ snapshots:
       gopd: 1.2.0
       set-function-name: 2.0.2
 
+  remix-auth-form@3.0.0(remix-auth@4.2.0):
+    dependencies:
+      remix-auth: 4.2.0
+
+  remix-auth@4.2.0: {}
+
   resolve-from@4.0.0: {}
 
   resolve-pkg-maps@1.0.0: {}
@@ -7133,3 +7161,5 @@ snapshots:
   yallist@5.0.0: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@4.1.11: {}
