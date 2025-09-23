@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/sidebar';
 import { ChartBar } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
+import type { User } from '@core/user';
+import { NavUser } from './navuser';
 
 const MENUS = [
   {
@@ -19,8 +21,10 @@ const MENUS = [
     icon: ChartBar,
   },
 ];
-
-export function AppSidebar() {
+export type AppSidebarProps = {
+  user: User;
+};
+export function AppSidebar({ user }: AppSidebarProps) {
   const sidebar = useSidebar();
   const location = useLocation();
 
@@ -64,6 +68,11 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <NavUser user={user} />
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }

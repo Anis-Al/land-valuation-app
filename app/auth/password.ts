@@ -30,7 +30,7 @@ async function validateCredentials(input: LoginInput) {
 
 export const passwordStrategy = new FormStrategy(async ({ form }) => {
   const input = Object.fromEntries(form) as LoginInput;
-
+  
   const userId = await validateCredentials(input);
 
   if (!userId) {
