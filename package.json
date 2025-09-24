@@ -40,6 +40,7 @@
     "dotenv-cli": "^10.0.0",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.5",
+    "filesize": "^11.0.13",
     "isbot": "^5.1.27",
     "lodash": "^4.17.21",
     "logger": "^0.0.1",
