@@ -4,7 +4,7 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "db:start": "docker run --rm -p 5432:5432 --name pg -e POSTGRES_USER=db_user -e POSTGRES_PASSWORD=db_password -e POSTGRES_DB=db postgres:17.2-alpine",
+    "db:start": "docker run --platform linux/amd64 --rm -p 5432:5432 --name pg -e POSTGRES_USER=db_user -e POSTGRES_PASSWORD=db_password -e POSTGRES_DB=db postgis/postgis:17-3.5-alpine",
     "db:generate": "dotenv -- drizzle-kit generate --name",
     "db:migrate": "dotenv -- drizzle-kit migrate",
     "db:seed": "dotenv -- tsx core/database/seed.ts",
@@ -36,6 +36,7 @@
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "dotenv": "^17.2.1",
     "dotenv-cli": "^10.0.0",
     "drizzle-kit": "^0.31.4",

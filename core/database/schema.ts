@@ -6,6 +6,11 @@ import {
   uuid,
   timestamp,
   uniqueIndex,
+  bigint,
+  doublePrecision,
+  geometry,
+  index,
+  varchar,
 } from 'drizzle-orm/pg-core';
 
 export const users = pgTable(
@@ -20,9 +25,32 @@ export const users = pgTable(
   },
   () => [uniqueIndex('users_username_key').on(sql`(auth->>'username')`)]
 );
+
 export const sessions = pgTable('sessions', {
   id: uuid('id').primaryKey().defaultRandom(),
   expires: timestamp('expires'),
   data: jsonb('data'),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+export const properties = pgTable(
+  'properties',
+  {
+    source: varchar('source', { length: 50 }),
+    state: varchar('state', { length: 50 }),
+    county: varchar('county', { length: 50 }),
+    id: varchar('id', { length: 50 }),
+    acres: doublePrecision('acres'),
+    lastUpdated: timestamp('lastUpdated'),
+    url: varchar('url', { length: 1024 }),
+    location: geometry('location', { type: 'point', srid: 4326 }),
+    salesPrice: bigint('sales_price', { mode: 'bigint' }),
+    salesDate: timestamp('sales_date'),
+    addressLine1: varchar('address_line_1', { length: 512 }),
+    addressCity: varchar('address_city', { length: 50 }),
+    addressState: varchar('address_state', { length: 50 }),
+    addressZip: varchar('address_zip', { length: 10 }),
+    timestamp: timestamp('timestamp'),
+  },
+  (t) => [index('properties_location_ids').using('gist', t.location)]
+);
