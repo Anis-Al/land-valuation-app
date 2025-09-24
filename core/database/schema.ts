@@ -6,11 +6,14 @@ import {
   uuid,
   timestamp,
   uniqueIndex,
+  customType,
   bigint,
   doublePrecision,
   geometry,
   index,
   varchar,
+  pgEnum,
+  integer,
 } from 'drizzle-orm/pg-core';
 
 export const users = pgTable(
@@ -54,3 +57,29 @@ export const properties = pgTable(
   },
   (t) => [index('properties_location_ids').using('gist', t.location)]
 );
+
+const blob = customType<{
+  data: Buffer;
+  default: false;
+}>({
+  dataType() {
+    return 'bytea';
+  },
+});
+export const status = pgEnum('status', ['Draft', 'Processing', 'Completed']);
+
+export const landValuationRequests = pgTable('land_valuation_requests', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  status: status('status').notNull().default('Draft'),
+  fileName: varchar('file_name', { length: 1024 }),
+  fileSize: integer('file_size'), //pttr bigint c mieux
+  columnMapping: jsonb('column_mapping'),
+  result: jsonb('result'),
+  rawContents: blob('raw_contents'),
+  outputContents: blob('output_contents'),
+  refinedContents: blob('refined_contents'),
+  createdBy: uuid('created_by')
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp('created_at').defaultNow(),
+});

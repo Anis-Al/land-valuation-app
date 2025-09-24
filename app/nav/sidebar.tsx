@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { ChartBar } from 'lucide-react';
+import { Files, ChartBar } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 import type { User } from '@core/user';
 import { NavUser } from './navuser';
@@ -19,6 +19,11 @@ const MENUS = [
     label: 'Dashboard',
     link: '/',
     icon: ChartBar,
+  },
+  {
+    label: 'Land valuation requests',
+    link: '/lvrs',
+    icon: Files,
   },
 ];
 export type AppSidebarProps = {
