@@ -61,3 +61,11 @@ export type UpdateLandValuationRequestResultInput = {
   refinedContents: Buffer;
   completedAt: Date;
 };
+
+export type LandValuationRequestFilter = {
+  search?: string;
+  status?: LandValuationRequestStatus[];
+  orderBy: 'createdAt';
+  page: number;
+  pageSize: number;
+};

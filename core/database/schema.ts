@@ -16,6 +16,7 @@ import {
   pgEnum,
   integer,
 } from 'drizzle-orm/pg-core';
+import type { LandValuationResult, ColumnMapping } from '@core/processor/model';
 
 export const users = pgTable(
   'users',
@@ -74,8 +75,8 @@ export const landValuationRequests = pgTable('land_valuation_requests', {
   status: status('status').notNull().default('Draft'),
   fileName: varchar('file_name', { length: 1024 }),
   fileSize: integer('file_size'),
-  columnMapping: jsonb('column_mapping'),
-  result: jsonb('result'),
+  columnMapping: jsonb('column_mapping').$type<ColumnMapping>(),
+  result: jsonb('result').$type<LandValuationResult>(),
   rawContents: blob('raw_contents'),
   outputContents: blob('output_contents'),
   refinedContents: blob('refined_contents'),
