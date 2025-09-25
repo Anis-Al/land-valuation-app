@@ -1,3 +1,4 @@
+import { LAND_VALUATION_REQUEST_STATUSES } from '@core/lvr/model';
 import type { UserAuth, UserProfile } from '@core/user';
 import { sql } from 'drizzle-orm';
 import {
@@ -66,13 +67,13 @@ const blob = customType<{
     return 'bytea';
   },
 });
-export const status = pgEnum('status', ['Draft', 'Processing', 'Completed']);
+export const status = pgEnum('status', LAND_VALUATION_REQUEST_STATUSES);
 
 export const landValuationRequests = pgTable('land_valuation_requests', {
   id: uuid('id').primaryKey().defaultRandom(),
   status: status('status').notNull().default('Draft'),
   fileName: varchar('file_name', { length: 1024 }),
-  fileSize: integer('file_size'), //pttr bigint c mieux
+  fileSize: integer('file_size'),
   columnMapping: jsonb('column_mapping'),
   result: jsonb('result'),
   rawContents: blob('raw_contents'),
@@ -82,4 +83,6 @@ export const landValuationRequests = pgTable('land_valuation_requests', {
     .notNull()
     .references(() => users.id),
   createdAt: timestamp('created_at').defaultNow(),
+  processingAt: timestamp('processing_at'),
+  completedAt: timestamp('completed_at'),
 });

@@ -22,7 +22,7 @@ const MENUS = [
   },
   {
     label: 'Land valuation requests',
-    link: '/lvrs',
+    link: '/land-valuation-requests',
     icon: Files,
   },
 ];

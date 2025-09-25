@@ -33,14 +33,14 @@ export function meta() {
 }
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  
+
   if (!url.pathname.startsWith('/login')) {
     const isAuthenticated = await isAuth(request);
     if (!isAuthenticated) {
       return redirect('/login');
     }
   }
-  
+
   return {
     theme: 'light' as Theme,
   };
