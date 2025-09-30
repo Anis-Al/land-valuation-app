@@ -24,8 +24,9 @@ async function addUsers(db: PostgresJsDatabase) {
 }
 async function main() {
   const db = drizzle({ connection: dbCredentials });
-  await db.execute('TRUNCATE sessions');
-  await db.execute('TRUNCATE users');
+  await db.execute(
+    'TRUNCATE sessions,users,land_valuation_requests,properties'
+  );
   await addUsers(db);
   process.exit(0);
 }

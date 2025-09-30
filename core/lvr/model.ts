@@ -69,3 +69,7 @@ export type LandValuationRequestFilter = {
   page: number;
   pageSize: number;
 };
+export type SearchResult<T> = {
+  items: T[];
+  total: number;
+};

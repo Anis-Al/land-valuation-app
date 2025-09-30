@@ -5,8 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1758550589235,
-      "tag": "0000_create_users_sessions_tables",
+      "when": 1758842527230,
+      "tag": "0000_create_tables",
       "breakpoints": true
     }
   ]

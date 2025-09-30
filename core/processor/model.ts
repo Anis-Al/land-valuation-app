@@ -47,9 +47,8 @@ export type LandValuationResult = {
   success: number;
   error: number;
   matchingStrategy: { [key in MatchingStrategy]: number };
-};
-
-export type FullLandValuationResult = LandValuationResult & {
   output: CSVItem[];
   refined: CSVItem[];
 };
+
+

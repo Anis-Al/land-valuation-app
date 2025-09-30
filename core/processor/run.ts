@@ -10,7 +10,6 @@ import mean from 'lodash/mean';
 import { and, asc, between, eq, gt, isNotNull, sql } from 'drizzle-orm';
 import {
   type ColumnMapping,
-  type FullLandValuationResult,
   type LandValuationResult,
   type MatchingStrategy,
   type ProcessOptions,
@@ -24,7 +23,7 @@ export async function run(
 ): Promise<LandValuationResult> {
   const items = await loadCSV(csvContents);
 
-  const result: FullLandValuationResult = {
+  const result: LandValuationResult = {
     output: [],
     refined: [],
     total: items.length,

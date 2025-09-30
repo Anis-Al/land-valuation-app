@@ -1,6 +1,7 @@
 import { landValuationRequests, db } from '@core/database';
 import { eq, SQL, desc, ilike, inArray, and, count } from 'drizzle-orm';
-import { first, trim } from 'lodash';
+import first from 'lodash/first';
+import trim from 'lodash/trim';
 import type {
   CreateLandValuationRequestInput,
   LandValuationRequest,
@@ -10,6 +11,7 @@ import type {
   UpdateLandValuationRequestPartialResultInput,
   UpdateLandValuationRequestResultInput,
   LandValuationRequestFilter,
+  SearchResult,
 } from './model';
 import { idString } from '@core/utils';
 
@@ -137,7 +139,7 @@ export async function updateLandValuationRequestResult(
 
 export async function findAllLandValuationRequests(
   filter: LandValuationRequestFilter
-): Promise<{ items: LandValuationRequest[]; total: number }> {
+): Promise<SearchResult<LandValuationRequest>> {
   return await db.transaction(async (tx) => {
     const orderByColumn = landValuationRequests[filter.orderBy];
 
