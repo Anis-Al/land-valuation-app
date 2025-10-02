@@ -23,8 +23,22 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontalIcon } from 'lucide-react';
+import { MoreHorizontalIcon, CalendarClockIcon } from 'lucide-react';
 import { z } from 'zod';
+import { formatDateAndTime } from '@/lib/utils';
+import { renderStatus } from './utils';
+import { useFetcher } from 'react-router';
+import { useState } from 'react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 const FilterSchema = z.object({
   search: z.string().optional(),
@@ -52,7 +66,17 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 export default function ({ loaderData }: Route.ComponentProps) {
   const items = (loaderData as SearchResult<LandValuationRequest>)?.items || [];
+  const fetcher = useFetcher();
+  const [itemToDelete, setItemToDelete] = useState<string | undefined>();
 
+  function deleteItem() {
+    fetcher.submit(new FormData(), {
+      action: `/land-valuation-requests/${itemToDelete}/delete`,
+      method: 'delete',
+    });
+
+    setItemToDelete(undefined);
+  }
   const columns: ColumnDef<LandValuationRequest>[] = [
     {
       accessorKey: 'id',
@@ -77,10 +101,21 @@ export default function ({ loaderData }: Route.ComponentProps) {
     {
       accessorKey: 'status',
       header: 'Status',
+      cell: ({ row }) => {
+        return renderStatus(row.original.status);
+      },
     },
     {
       accessorKey: 'createdAt',
       header: 'Created at',
+      cell: ({ row }) => {
+        return (
+          <div className="flex gap-1 items-center">
+            <CalendarClockIcon className="w-4 h-4" />
+            {formatDateAndTime(row.original.createdAt)}
+          </div>
+        );
+      },
     },
     {
       id: 'actions',
@@ -99,7 +134,12 @@ export default function ({ loaderData }: Route.ComponentProps) {
               <DropdownMenuItem asChild>
                 <Link to={`${baseLink}`}>Details</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>test</DropdownMenuItem>
+              <DropdownMenuItem
+                asChild
+                onClick={() => setItemToDelete(row.original.id)}
+              >
+                Delete
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -109,6 +149,24 @@ export default function ({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="flex flex-col">
+      <AlertDialog open={itemToDelete !== undefined}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete this item</AlertDialogTitle>
+            <AlertDialogDescription>
+              Do you want to permanently delete this item?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setItemToDelete(undefined)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={deleteItem}>
+              Yes, delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-2">
           <Breadcrumb>

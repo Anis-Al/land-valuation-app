@@ -13,6 +13,7 @@ export default [
       index('./lvrs/list.tsx'),
       route(':id', './lvrs/details.tsx'),
       route('new', './lvrs/new.tsx'),
+      route(':id/delete', './lvrs/delete.tsx'),
     ]),
   ]),
   route('/login', './auth/login.tsx'),
