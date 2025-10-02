@@ -14,6 +14,8 @@ export default [
       route(':id', './lvrs/details.tsx'),
       route('new', './lvrs/new.tsx'),
       route(':id/delete', './lvrs/delete.tsx'),
+      route(':id/column-mapping', './lvrs/column-mapping.tsx'),
+      route(':id/download/:contentsType', './lvrs/download.tsx'),
     ]),
   ]),
   route('/login', './auth/login.tsx'),
