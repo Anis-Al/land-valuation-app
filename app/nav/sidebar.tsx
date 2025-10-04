@@ -49,11 +49,11 @@ export function AppSidebar({ user }: AppSidebarProps) {
         <div className=" flex gap-4 items-center justify-center">
           <div
             data-open={sidebar.open}
-            className="h-8 w-8 data-[open=true]:hidden p-1"
+            className="h-8 w-8 data-[open=true]:hidden p-1 bg-[url(/logo-small-light.webp)] bg-cover bg-center"
           />
           <div
             data-open={sidebar.open}
-            className="h-20 w-44 data-[open=false]:hidden p-2"
+            className="h-20 w-44 data-[open=false]:hidden p-2 bg-[url(/logo-light.webp)] bg-cover bg-center"
           />
         </div>
       </SidebarHeader>

@@ -3,6 +3,7 @@ import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import { landValuationRequests, users } from './schema';
 import { dbCredentials } from './config';
 import type { LandValuationRequestInput } from '@core/lvr';
+import { DEFAULT_COLUMN_MAPPING } from '@core/processor';
 import { compressCSV } from '@core/utils';
 import { join } from 'path';
 import fs from 'fs/promises';
@@ -57,6 +58,17 @@ async function addLandValuationRequests(
         rawContents,
         createdBy,
         createdAt: new Date(),
+      },
+      {
+        status: 'Complete',
+        fileName: `${RAW_FILE_BASENAME}.output.csv`,
+        fileSize: outputContents.length,
+        columnMapping: DEFAULT_COLUMN_MAPPING,
+        outputContents,
+        createdBy,
+        createdAt: new Date(),
+        processingAt: new Date(),
+        completedAt: new Date(),
       },
     ] as LandValuationRequestInput[]);
   } catch (error) {

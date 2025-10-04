@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontalIcon, CalendarClockIcon } from 'lucide-react';
 import { z } from 'zod';
@@ -134,8 +135,9 @@ export default function ({ loaderData }: Route.ComponentProps) {
               <DropdownMenuItem asChild>
                 <Link to={`${baseLink}`}>Details</Link>
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem
-                asChild
+                variant="destructive"
                 onClick={() => setItemToDelete(row.original.id)}
               >
                 Delete
