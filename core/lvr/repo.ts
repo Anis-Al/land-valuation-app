@@ -1,5 +1,5 @@
 import { landValuationRequests, db } from '@core/database';
-import { eq, SQL, desc, ilike, inArray, and, count } from 'drizzle-orm';
+import { eq, SQL, desc, ilike, inArray, and, asc, count } from 'drizzle-orm';
 import first from 'lodash/first';
 import trim from 'lodash/trim';
 import type {
@@ -176,4 +176,14 @@ export async function findAllLandValuationRequests(
       total: first(await totalQuery)?.total ?? 0,
     };
   });
+}
+
+export async function findAllPendingLandValuationRequests(): Promise<
+  LandValuationRequest[]
+> {
+  return db
+    .select(DEFAULT_SELECT_FIELDS)
+    .from(landValuationRequests)
+    .where(eq(landValuationRequests.status, 'Pending'))
+    .orderBy(asc(landValuationRequests.createdAt));
 }

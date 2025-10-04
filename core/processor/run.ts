@@ -110,11 +110,11 @@ async function processItem(
 
   const matchingStrategy: MatchingStrategy =
     location[0] === 0 && location[1] === 0 ? 'County' : 'Coordinates';
-
+  // eslint-disable-next-line
   let similar: any[] = [];
 
-  const minAcres = acres * 0.8;
-  const maxAcres = acres * 1.2;
+  const minAcres = acres * 0.7;
+  const maxAcres = acres * 1.3;
 
   if (matchingStrategy === 'County') {
     similar = await db
@@ -134,7 +134,7 @@ async function processItem(
         )
       )
       .orderBy(asc(sql`ABS(acres - ${acres})`))
-      .limit(1000);
+      .limit(100);
   } else {
     similar = await db
       .select({
@@ -153,7 +153,7 @@ async function processItem(
         )
       )
       .orderBy(asc(sql`distance`))
-      .limit(1000);
+      .limit(100);
   }
 
   const maxDistance = max(similar.map((p) => p.distance)) ?? 0;
@@ -190,6 +190,7 @@ async function processItem(
   );
 
   generateOutput(output, topScores, matchingStrategy);
+  generateRefined(refined, item, options.columnMapping, topScores);
 
   return {
     output,
@@ -246,4 +247,21 @@ function generateOutput(
 
     output[`Link ${i + 1}`] = topScores[i].url;
   }
+}
+
+function generateRefined(
+  refined: CSVItem,
+  item: CSVItem,
+  columnMapping: ColumnMapping,
+  topScores: ScoredProperty[]
+) {
+  const { state, county, acres } = extractData(columnMapping, item);
+
+  const avgPrice = bigIntMean(topScores.map((p) => p.salesPrice));
+
+  refined['State'] = state;
+  refined['County'] = county;
+  refined['Acreage'] = acres.toString();
+  refined['Assessed Value'] = avgPrice.toString();
+
 }
