@@ -58,10 +58,8 @@ export async function loader({ request }: Route.LoaderArgs) {
       Object.fromEntries(searchParams.entries())
     );
     const result = await findAllLandValuationRequests(filter);
-    console.log('Query result:', result);
     return result;
   } catch (error) {
-    console.error('Loader error:', error);
     redirect('/');
   }
 }

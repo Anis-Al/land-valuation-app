@@ -37,11 +37,15 @@ import { Separator } from '@/components/ui/separator';
 import { formatDateAndTime } from '@/lib/utils';
 import { filesize } from 'filesize';
 import { renderStatus } from './utils';
+import { SuccessChart } from './success-chart';
+import { MatchingStrategyChart } from './matching-strategy-chart';
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   try {
     const currentUserId = await getCurrentUserId(request);
-
+    if (!params.id) {
+      throw new Response('not found', { status: 404 });
+    }
     const lvr = await findLandValuationRequest(params.id);
     let columns: string[] | undefined = undefined;
 
@@ -219,6 +223,9 @@ export default function ({ loaderData }: Route.ComponentProps) {
               </div>
             </CardContent>
           </Card>
+
+          {lvr.result && <SuccessChart result={lvr.result} />}
+          {lvr.result && <MatchingStrategyChart result={lvr.result} />}
 
           {lvr.columnMapping && (
             <Card>

@@ -23,6 +23,9 @@ export async function action({ request, params }: Route.ActionArgs) {
     if (request.method !== 'PUT') {
       throw 'Wrong method';
     }
+    if (!params.id) {
+      throw 'Not found';
+    }
 
     const { columnMapping } = schema.parse(await request.json());
 
@@ -42,6 +45,8 @@ export async function action({ request, params }: Route.ActionArgs) {
       status: 'Pending',
       columnMapping,
     });
+
+    return redirect('/land-valuation-requests');
   } catch {
     return redirect('/');
   }
