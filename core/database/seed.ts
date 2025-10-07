@@ -104,9 +104,10 @@ async function addLandValuationRequests(
       },
       {
         status: 'Complete',
-        fileName: `${RAW_FILE_BASENAME}.output.csv`,
-        fileSize: outputContents.length,
+        fileName: `${RAW_FILE_BASENAME}.csv`,
+        fileSize: rawCSVContents.length,
         columnMapping: DEFAULT_COLUMN_MAPPING,
+        rawContents,
         outputContents,
         createdBy,
         createdAt: new Date(),
@@ -126,7 +127,9 @@ async function main() {
   );
   const [anis] = await addUsers(db);
   await addProperties(db);
-  await addLandValuationRequests(db, anis);
+  for (let i = 0; i < 5; i++) {
+    await addLandValuationRequests(db, anis);
+  }
   process.exit(0);
 }
 main();

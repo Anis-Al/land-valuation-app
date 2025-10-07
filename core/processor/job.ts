@@ -12,7 +12,7 @@ import { run } from './run';
 import omit from 'lodash/omit';
 import { DEFAULT_PROCESS_OPTIONS, type LandValuationResult } from './model';
 
-async function processLandValuationRequest(lvr: LandValuationRequest) {
+ async function processLandValuationRequest(lvr: LandValuationRequest) {
   logger.info(`Processing ${lvr.id}`);
 
   await updateLandValuationRequestProcessing(lvr.id, {
@@ -87,7 +87,7 @@ async function main() {
 
   await task();
 
-  setInterval(task, 5000);
+  setInterval(task, 1000 * 60 * 5);
 }
 
 main();

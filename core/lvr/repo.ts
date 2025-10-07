@@ -14,6 +14,7 @@ import type {
   SearchResult,
 } from './model';
 import { idString } from '@core/utils';
+import type { PgSelect } from 'drizzle-orm/pg-core';
 
 const DEFAULT_SELECT_FIELDS = {
   id: landValuationRequests.id,
@@ -151,6 +152,8 @@ export async function findAllLandValuationRequests(
       .orderBy(desc(orderByColumn))
       .$dynamic();
 
+    query = withPagination(query, filter.page, filter.pageSize);
+    
     let totalQuery = tx
       .select({ total: count() })
       .from(landValuationRequests)
@@ -186,4 +189,12 @@ export async function findAllPendingLandValuationRequests(): Promise<
     .from(landValuationRequests)
     .where(eq(landValuationRequests.status, 'Pending'))
     .orderBy(asc(landValuationRequests.createdAt));
+}
+
+export function withPagination<T extends PgSelect>(
+  qb: T,
+  page: number = 1,
+  pageSize: number = 5
+) {
+  return qb.limit(pageSize).offset((page - 1) * pageSize);
 }
