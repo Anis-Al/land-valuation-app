@@ -9,6 +9,7 @@
     "db:migrate": "dotenv -- drizzle-kit migrate",
     "db:seed": "dotenv -- tsx core/database/seed.ts",
     "processor:test": "dotenv -- tsx core/processor/test.ts",
+    "processor:job": "dotenv -- tsx core/processor/job.ts",
     "build": "react-router build",
     "dev": "react-router dev --host",
     "start": "dotenv -- react-router-serve ./build/server/index.js",
